@@ -10,7 +10,7 @@ namespace WasteWiseFunctions
     public static class SensorFunction
     {
         [FunctionName("SensorProcessor")]
-        [return: ServiceBus("myqueue", Connection = "ServiceBusConnection")]
+        [return: ServiceBus("topic", Connection = "ServiceBusConnection")]
         public static async Task<string> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "/sensor")] HttpRequest req,
             ILogger log)
