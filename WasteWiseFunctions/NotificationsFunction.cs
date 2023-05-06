@@ -27,6 +27,7 @@ namespace WasteWiseFunctions
                 var sensorReading = JsonConvert.DeserializeObject<SensorData>(Encoding.UTF8.GetString(message.Body));
 
                 // Get the user ID that the sensor belongs to
+                var user = new UserAccount(new ExtraService[0]);
                 var userId = GetUserForSensor(sensorReading.Id);
 
                 //Send notification
@@ -53,12 +54,6 @@ namespace WasteWiseFunctions
         private async Task SendNotificationToNG(string userId)
         {
             //Send notification to NG that trash can is full
-            throw new NotImplementedException();
-        }
-
-        private string GetUserForSensor(string sensorReadingId)
-        {
-            //Fetch user from DB that the sensor belongs to
             throw new NotImplementedException();
         }
 

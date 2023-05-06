@@ -1,6 +1,7 @@
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using WasteWiseFunctions.business;
 
 namespace WasteWiseFunctions
 {
@@ -14,10 +15,15 @@ namespace WasteWiseFunctions
         }
 
         [FunctionName("InvoiceFunction")]
-        public void Run([ServiceBusTrigger("topic", "invoice", Connection = "ServiceBusConnection")] ServiceBusMessage mySbMsg)
+        public void Run([ServiceBusTrigger("topic", "invoice", Connection = "ServiceBusConnection")] ServiceBusMessage message)
         {
             //here goes invoice logic
-            _logger.LogInformation($"C# ServiceBus topic trigger function processed message: {mySbMsg}");
+            UserAccount user = new UserAccount();
+            //TODO!!
+            
+
+            var sensorReading = JsonConvert.DeserializeObject<SensorData>(Encoding.UTF8.GetString(message.Body));
+            _logger.LogInformation($"C# ServiceBus topic trigger function processed message: {message}");
         }
     }
 }
