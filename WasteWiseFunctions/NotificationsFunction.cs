@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using WasteWiseFunctions.business;
 
 namespace WasteWiseFunctions
 {
@@ -27,18 +28,18 @@ namespace WasteWiseFunctions
                 var sensorReading = JsonConvert.DeserializeObject<SensorData>(Encoding.UTF8.GetString(message.Body));
 
                 // Get the user ID that the sensor belongs to
-                var user = new UserAccount(new ExtraService[0]);
-                var userId = GetUserForSensor(sensorReading.Id);
+                var user = new UserAccount();
+                var userId = user.GetUserForSensor(sensorReading.Id);
 
                 //Send notification
                 switch (sensorReading.Type)
                 {
                     case "ultrasonic":
-                        await SendNotificationToUser(userId, sensorReading.Type);
-                        await SendNotificationToNG(userId);
+                        await SendNotificationToUser(userId.userID, sensorReading.Type);
+                        await SendNotificationToNG(userId.userID);
                         break;
                     case "color":
-                        await SendNotificationToUser(userId, sensorReading.Type);
+                        await SendNotificationToUser(userId.userID, sensorReading.Type);
                         break;
                 }
 
@@ -51,13 +52,13 @@ namespace WasteWiseFunctions
             }
         }
 
-        private async Task SendNotificationToNG(string userId)
+        private async Task SendNotificationToNG(int userId)
         {
             //Send notification to NG that trash can is full
             throw new NotImplementedException();
         }
 
-        private async Task SendNotificationToUser(string userId, string notificationType)
+        private async Task SendNotificationToUser(int userId, string notificationType)
         {
             //Send the specific type of notification to user
             throw new NotImplementedException();
